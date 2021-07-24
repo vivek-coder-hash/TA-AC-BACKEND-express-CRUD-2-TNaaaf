@@ -75,7 +75,17 @@ router.get("/:id/delete" , (req,res,next)=> {
 //increment likes
 router.get("/:id/likes" , (req,res,next)=> {
     var id =req.params.id
-    Article.findByIdAndUpdate(id , {likes:{$inc:1}} , (err ,article)=> {
+    Article.findByIdAndUpdate(id , {$inc:{likes:1}} , (err ,article)=> {
+        if(err) return next(err)
+        res.redirect("/articles/"+id)
+    })
+})
+
+
+//decrement likes
+router.get("/:id/dislikes" , (req,res,next)=> {
+    var id =req.params.id
+    Article.findByIdAndUpdate(id , {$inc:{likes:-1}} , (err ,article)=> {
         if(err) return next(err)
         res.redirect("/articles/"+id)
     })
