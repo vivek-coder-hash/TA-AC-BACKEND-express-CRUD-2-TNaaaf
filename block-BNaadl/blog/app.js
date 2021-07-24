@@ -1,11 +1,18 @@
-var createError = require('http-errors');
+//var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require("mongoose")
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+//connect to database
+mongoose.connect("mongodb://localhost/blog" , {useNewUrlParser:true , useUnifiedTopology:true} , (err)=> {
+  console.log(err? err: "connected to database")
+})
+
 
 var app = express();
 
@@ -21,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use("/articles" , require("./routes/articles"))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
