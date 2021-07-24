@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Book details</p>
+    <h1><%= article.title %> </h1>
+    <h1><%= article.description %> </h1>
+    
+    
+        <% article.tags.forEach(element => { %>
+            
+          <%= element %> 
+         
+          
+       <% }) %>
+    
+    
+    <h1><%= article.author %> </h1>
+    <h1><%= article.likes ? article.likes:0 %> </h1>
+    
+
+    <a href="/articles">
+    <button>
+        Go back
+    </button></a>
+
+    <a href="/articles/<%= article._id %>/likes">
+        <button>Likes</button>
+    </a>
+
+    <a href="/articles/<%= article._id %>/edit ">
+        <button>Edit</button>
+    </a>
+
+    <a href="/articles/<%= article._id %>/delete">
+        <button>delete</button>
+    </a>
+</body>
+</html>
