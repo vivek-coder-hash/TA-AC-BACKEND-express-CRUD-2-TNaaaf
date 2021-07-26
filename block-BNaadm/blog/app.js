@@ -1,6 +1,7 @@
 var express = require("express")
 var mongoose =require("mongoose")
 var path = require("path")
+var logger = require("morgan")
 
 mongoose.connect("mongodb://localhost/blog" , {useNewUrlParser:true , useUnifiedTopology:true} , (err)=> {
     console.log(err ? err: "connect to database")
@@ -32,5 +33,5 @@ app.use((err,req,res,next)=> {
 
 //listen
 app.listen(4000,()=>{
-    console.log("server listening to port 4000")
+    console.log("server is listening to port 4000")
 })
