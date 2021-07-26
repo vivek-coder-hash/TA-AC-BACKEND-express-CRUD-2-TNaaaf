@@ -1,7 +1,7 @@
 var express = require("express")
 var router = express.Router()
 var Article  = require("../models/article")
-var Comment = require("../models/article")
+var Comment = require("../models/comment")
 
 
 router.get("/" , (req,res,next)=> {
@@ -18,12 +18,22 @@ router.get("/new" , (req,res)=> {
 })
 
 
-router.get("/:id" , (req,res,next)=> {
+/*router.get("/:id" , (req,res,next)=> {
     var id =req.params.id
     //handle here
     
     Article.findById(id , (err,article)=> {
         
+        if(err) return next(err)
+        res.render("articleDetails.ejs" , {article:article})
+    })
+})*/
+
+
+router.get("/:id" , (req,res,next)=> {
+    var id =req.params.id
+    Article.findById(id).populate("comments").exec((err ,article)=> {
+        console.log(err,article)
         if(err) return next(err)
         res.render("articleDetails.ejs" , {article:article})
     })
@@ -99,5 +109,23 @@ router.get("/:id/dislikes" , (req,res,next)=> {
 
 
 //create comments
+router.post("/:id/comments" ,(req,res,next)=> {
+    var id = req.params.id
+    req.body.articleId  = id
+    Comment.create(req.body , (err , comment)=> {
+        if(err) return next(err)
+        console.log(err,comment)
+        //update book with comment id into comments section
+        Article.findByIdAndUpdate(id , {$push:{comments:comment._id}} , (err ,updatedArticle)=> {
+            console.log(err,updatedArticle)
+            if(err) return next(err)
+            
+            res.redirect("/articles/"+id)
+
+        })
+
+        
+    })
+} )
 
 module.exports=router
