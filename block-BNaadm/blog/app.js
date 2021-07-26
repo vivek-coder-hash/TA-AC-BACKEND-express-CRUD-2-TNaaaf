@@ -19,7 +19,7 @@ app.set("views" , path.join(__dirname , "views"))
 
 //routing middleware
 app.use("/articles" , require("./routes/blog"))
-//app.use("/comments" , require("./routes/comment"))
+app.use("/comments" , require("./routes/comment"))
 
 //Error handler
 app.use((req,res,next)=> {

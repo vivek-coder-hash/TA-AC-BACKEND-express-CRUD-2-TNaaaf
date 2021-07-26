@@ -1,6 +1,7 @@
 var express = require("express")
 var router = express.Router()
 var Article  = require("../models/article")
+var Comment = require("../models/article")
 
 
 router.get("/" , (req,res,next)=> {
@@ -95,5 +96,8 @@ router.get("/:id/dislikes" , (req,res,next)=> {
         res.redirect("/articles/"+id)
     })
 })
+
+
+//create comments
 
 module.exports=router
