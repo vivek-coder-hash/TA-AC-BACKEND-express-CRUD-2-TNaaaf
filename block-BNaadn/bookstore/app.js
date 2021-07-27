@@ -1,6 +1,8 @@
 var express = require("express")
 var mongoose = require("mongoose")
 var path =require("path")
+var booksRouter = require('./routes/book');
+var authorsRouter = require('./routes/author');
 
 //connect to databse
 mongoose.connect("mongodb://localhost/bookstore" , {useNewUrlParser:true, useUnifiedTopology:true} , (err)=> {
@@ -19,6 +21,10 @@ app.set("view engine" , "ejs")
 app.set("views" , path.join(__dirname , "views"))
 
 //routing middlewares
+
+app.use('/book', booksRouter);
+app.use('/author', authorsRouter);
+
 
 //Error handle
 app.use((req,res,next)=> {
